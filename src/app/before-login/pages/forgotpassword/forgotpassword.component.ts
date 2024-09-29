@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 // import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from 'src/app/Services/authentication/register.service';
 import Swal from 'sweetalert2';
@@ -15,7 +16,7 @@ import Swal from 'sweetalert2';
 export class ForgotpasswordComponent {
   emailval: any;
   forgotForm:FormGroup
-  constructor(private router: Router,private _registerdetails:RegisterService,private _formValue:FormBuilder){
+  constructor(private spinner:NgxSpinnerService ,private router: Router,private _registerdetails:RegisterService,private _formValue:FormBuilder){
   this.forgotForm= this._formValue.group({
     forgotemail:['',[Validators.required,Validators.email]]
   })
@@ -29,55 +30,67 @@ export class ForgotpasswordComponent {
     this.router.navigate(['/auth/login'])
   }
   
-  // verifyemailid(val:any){
-  //   let emailfound = false
-  //   this._registerdetails.getRegistration().subscribe({
-  //     next:(res)=>{
-  //        res.forEach((element: { useremail: string;id:number  }) => {
-  //          if(element.useremail == val.forgotemail){
-  //          emailfound= true;
-  //           this.router.navigate(['/forgot-passwordfield'],{queryParams:{id:element.id}})
-  //          }
-  //        });
-  //       if(emailfound){
-  //         this.toastr.success("Email Found")
-  //       }
-  //       else{
-  //         this.toastr.error("Email not found")
-  //       }
-  //     }
-  //    })  
-  // }
-
   
   verifyemailid(val:any){
     // console.log(val)
-    // Swal.fire({
-    //   html:`<input type="number" id="otp" placeholder="Enter OTP"style="margin-bottom: 20px;border-radius: 8px;padding: 5px 20px;width: 75%;border: 2px solid gray;"> <br>
-    //   <input type="password" id="password" placeholder="New Password" style="margin-bottom: 20px;border-radius: 8px;padding: 5px 20px;width: 75%;border: 2px solid gray;"><br>
-    //   <input type="text" id="cpass" placeholder="Confirm Password" style="margin-bottom: 20px;border-radius: 8px;padding: 5px 20px;width: 75%;border: 2px solid gray;">`,
-    //   confirmButtonText:'Change'
-      
-    // })
-    // .then((resp)=>{
-    //   if(resp.isConfirmed){
-    //     const otp = document.getElementById('otp');
-    //     const password = document.getElementById('password');
-    //     const cpass = document.getElementById('cpass');
-    //     // if(password !== cpass)
-    //     console.log(otp.value,password.value,cpass.value);
-        
-    //   }
-
-    // })
-    return;
+    this.spinner.show();
     this._registerdetails.findEmail({useremail:val.forgotemail}).subscribe({
       next:(res:any)=>{
+        this.spinner.hide();
         // console.log(res);
+        Swal.fire({
+      title:"Enter OTP.",
+      input:"text",
+      confirmButtonText:'Next',
+      allowOutsideClick:false,
+      showCancelButton:true,
+      showLoaderOnConfirm:true,
+      preConfirm:(otp)=>{
+        if(otp.length !== 6){
+          return Swal.showValidationMessage('Invalid OTP');
+        }
+        Swal.fire({
+            title:'New Password',
+            input:'text',
+            confirmButtonText:'Next',
+            allowOutsideClick:false,
+            showCancelButton:true,
+            showLoaderOnConfirm:true,
+            preConfirm:async (password)=>{
+              try {
+                const response = await fetch('https://c8bltjmv-3000.inc1.devtunnels.ms/auth/password',{
+                  method:'PATCH',
+                  headers:{"Content-Type":"application/json"},
+                  body:JSON.stringify({otp,password,email:val.forgotemail})
+                })
+  
+                if(response.ok){
+                  return "Password Updated! please Login again.";
+                } 
+              } catch (error) {
+                return Swal.showValidationMessage(`Error! Try Again.`);
+              }
+              
+            }
+          })
+          .then((val)=>{
+            if(val.value==="Password Updated! please Login again."){
+            Swal.fire({
+              title:'Password Updated Successfully',
+              icon:'success',
+              timer:3000
+            })
+            setTimeout(()=>{this.router.navigate(['/auth/login']);},3000);
+          }
+          })
+      }
+    })
         
       },
       error:(err)=>{
-        // this.toastr.error(err.error.message)
+        this.spinner.hide();
+        console.log(err.error);
+        
       }
      })  
   }
