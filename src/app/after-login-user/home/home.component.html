@@ -1,0 +1,139 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col d-flex flex-column justify-content-center align-items-start">
+            <h1 class="heading" style="    color: #1360a2; font-size: 50px;">Build your skills </h1>
+            <h1 style="    color: #1360a2; font-size: 50px;">Any time anywhere</h1>
+            <p class="mt-4">Online courses are a form of learing. The concept of an online course according to picciano
+                2002 is to present learing materials online. </p>
+            <p>Join now and start learing today.</p>
+            <div class="d-flex  align-items-start mt-3" style="width: 100%;">
+                <div class="d-flex flex-column align-items-center pe-5 ">
+                    <div class="numspace pe-1">75k+ </div>Applications
+                </div>
+                <div class="d-flex flex-column align-items-center pe-5 ">
+                    <div class="numspace pe-1">44+ </div>Courses
+                </div>
+                <div class="d-flex flex-column align-items-center pe-5 ">
+                    <div class="numspace pe-1">15+ </div>Countries
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <img class="registerimg" src="../../../assets/register.png">
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <h1 style="color: #1360a2;  text-align: center;">Meet our Tutors</h1>
+        <section class="cust-review-sec">
+            <div class="customer-reviews-div">
+                <div>
+                    <div class="cust-rev-photodiv">
+                        <img src="./assets/reviewpeople/person1.jpg" class="cust-rev-userpic" alt="person1">
+                        <div class="smalldot">
+                            <img src="./assets/pngwing.com.png" style="width: 45%;" alt="dd">
+                        </div>
+                    </div>
+                    <p class="customer-reviews-p">Comparison dissimilar unpleasant six
+                        compliment two unpleasing any add.
+                        Ashamed my company thought wishing
+                        colonel it prevent he in. Pretended residence
+                        are something far engrossed old off. </p>
+                    <div class="customer-reviewer">Junl Sarukh</div>
+                    <div class="cust-rev-designation">Designer of Boxass</div>
+                </div>
+                <div class="horiz"></div>
+                <div>
+                    <div class="cust-rev-photodiv">
+                        <img src="./assets/reviewpeople/girl5.jpg" class="cust-rev-userpic" alt="person2">
+                        <div class="smalldot">
+                            <img src="./assets/pngwing.com.png" style="width: 45%;" alt="dd">
+                        </div>
+                    </div>
+                    <p class="customer-reviews-p">Comparison dissimilar unpleasant six
+                        compliment two unpleasing any add.
+                        Ashamed my company thought wishing
+                        colonel it prevent he in. Pretended residence
+                        are something far engrossed old off. </p>
+                    <div class="customer-reviewer">Junl Sarukh</div>
+                    <div class="cust-rev-designation">Designer of Boxass</div>
+                </div>
+                <div class="horiz"></div>
+                <div>
+                    <div class="cust-rev-photodiv">
+                        <img src="./assets/reviewpeople/person2.avif" class="cust-rev-userpic" alt="person3">
+                        <div class="smalldot">
+                            <img src="./assets/pngwing.com.png" style="width: 45%;" alt="dd">
+                        </div>
+                    </div>
+                    <p class="customer-reviews-p">Comparison dissimilar unpleasant six
+                        compliment two unpleasing any add.
+                        Ashamed my company thought wishing
+                        colonel it prevent he in. Pretended residence
+                        are something far engrossed old off. </p>
+                    <div class="customer-reviewer">Junl Sarukh</div>
+                    <div class="cust-rev-designation">Designer of Boxass</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <h1 style="color: #1360a2;  text-align: center; margin-top: 2rem;">Most popular courses</h1>
+    <div class="filter" style="width: 100%; display: flex;justify-content: end;">
+        <div style="border: 3px solid gray; border-radius: 8px;padding: 5px 17px;"><i class="fa-solid fa-filter"
+                style="margin-right: 10px;"></i><strong>Category : </strong>
+            <select style="border: none;outline: none; background-color: white;" #filterType (change)="filterContent(filterType)">
+                <option value="">All</option>
+                <option value="Web Development">Web Development</option>
+                <option value="App Development">App Development</option>
+                <option value="Machine Learning and AI">Machine Learning and AI</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div *ngIf="sanitizedCourses?.length ==0" style="text-align: center; margin-top: 7rem;">
+        <img src="../../../assets/searchAnimation.gif" alt="">
+        <h6 class="mt-4">No courses found</h6>
+    </div>
+    
+    <div class="row productsrow mt-5 pt-4" *ngIf="sanitizedCourses.length > 0">
+        <div class="col"
+            *ngFor="let course of sanitizedCourses | paginate:{itemsPerPage:4 ,currentPage:page,totalItems:sanitizedCourses.length};">
+            <div class="rcard m-auto">
+                <div style="height: 8rem; background: linear-gradient(245deg, #dee3e9, transparent);">
+                    <img [src]='course.sanitizedBannerimage' class="card-img-top" alt="bannerimg">
+                </div>
+                <div class="card-body" style="padding :10px;">
+                    <h5 class="card-title ellipsis">{{course.coursename}}</h5>
+
+                    <div class="d-flex justify-content-between">
+                        <p style="color: gray;">ratings:</p>
+                        <p style="font-weight: 600;font-size: 22px; color: goldenrod;">★★★★★ </p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p style="color: gray;">Category: </p>
+                        <p class="ellipsis"> {{course.category}} </p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p style="    color: #2bcf2b;font-weight: 600;font-size: 16px;">Author: </p>
+                        <p style="color: gray;" class="ellipsis">{{course.creatorname}}</p>
+                    </div>
+                    <div style="display: grid ; grid-template-columns: 65% 35% ;">
+                        <p style="color: gray;">Total enrollments: </p>
+                        <p class="ellipsis"> {{course.totalenrolments}} </p>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-evenly "
+                    style="background-color: white; border: none; padding:0 0 0.5rem 0;">
+                    <button class=" butn viewbtn" (click)="scrollToTop()" [routerLink]="['single-course-page/',course.id]">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pagination" *ngIf="sanitizedCourses.length > 0"
+    style="height: 50px; width: 100%; position: relative;top: 50px;">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>

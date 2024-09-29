@@ -1,0 +1,139 @@
+<div class="main-container" style="width: 100%;">
+
+    <div class="container">
+
+        <form class="row g-3" [formGroup]="courseForm" (ngSubmit)="submitCourseForm(courseForm.value);">
+            <h1>Add Course</h1>
+            <div class="col-md-6">
+                <label for="category" class="form-label">Course Category<span style="color: red">*</span></label>
+                <select id="category" class="form-select" formControlName="category">
+                    <option value="">Choose...</option>
+                    <option value="Web Development">Web development</option>
+                    <option value="App Development">App development</option>
+                    <option value="Machine Learning and AI">Machine learning and AI</option>
+                </select>
+                <div style="color: red"
+                    *ngIf=" !courseForm.controls['category']?.valid &&(courseForm.controls['category'].dirty ||courseForm.controls['category'].touched)">
+                    Category is Required
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="coursename" class="form-label">Course Name<span style="color: red">*</span></label>
+                <input type="text" class="form-control" id="coursename" placeholder=" Full course on javascript."
+                    formControlName="coursename">
+                    <div style="color: red"
+                    *ngIf=" !courseForm.controls['coursename']?.valid &&(courseForm.controls['coursename'].dirty ||courseForm.controls['coursename'].touched)">
+                    Coursename is Required
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="bannerImage" class="form-label">Banner Image<span style="color: red">*</span></label>
+                <input type="file" accept=".jpg,.jpeg,.png" class="form-control" id="bannerImage"
+                    (change)="uploadimage($event)" formControlName="bannerimage">
+                    <div style="color: red"
+                    *ngIf=" !courseForm.controls['bannerimage']?.valid &&(courseForm.controls['bannerimage'].dirty ||courseForm.controls['bannerimage'].touched)">
+                    Image is Required
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="videolink" class="form-label">Video Link<span style="color: red">*</span></label>
+                <input type="text" class="form-control" id="videolink" placeholder="Video Link"
+                    formControlName="videolink">
+                    <div style="color: red"
+                    *ngIf=" !courseForm.controls['videolink']?.valid &&(courseForm.controls['videolink'].dirty ||courseForm.controls['videolink'].touched)">
+                    Videolink is Required
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="pdf" class="form-label">PDF<span style="color: red">*</span></label>
+                <input type="file" accept=".pdf" class="form-control" id="pdf" (change)="uploaddoc($event)"
+                    formControlName="pdf">
+                    <div style="color: red"
+                    *ngIf=" !courseForm.controls['pdf']?.valid &&(courseForm.controls['pdf'].dirty ||courseForm.controls['pdf'].touched)">
+                    PDF is Required
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="description" class="form-label">Description<span style="color: red">*</span></label>
+                <textarea class="form-control" id="description" placeholder="Course Details"
+                    formControlName="description" rows="3"></textarea>
+                    <div style="color: red"
+                    *ngIf=" !courseForm.controls['description']?.valid &&(courseForm.controls['description'].dirty ||courseForm.controls['description'].touched)">
+                    Description is Required
+                </div>
+            </div>
+
+
+            <div formArrayName="quizzes" class="mb-4">
+                <div *ngFor="let quiz of quizArray.controls; let i=index" [formGroupName]="i" class="card p-3 mb-3">
+                    <h3 class="card-title d-flex justify-content-between align-items-center">
+                        Question {{i + 1}} 
+                        <button type="button" (click)="deleteQuiz(i)" class="btn btn-danger btn-sm">Delete
+                            Question</button>
+                    </h3>
+                    <small><span style="color: red">(4 options must be created and correct answer must be choosen)</span></small>
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Question:</label>
+                        <input formControlName="question" type="text" class="form-control"
+                            placeholder="Enter your question">
+                    </div>
+
+                    <div formArrayName="options" class="mb-3">
+                        <div *ngFor="let option of getOptions(i).controls; let j=index" [formGroupName]="j"
+                            class="mb-2">
+                            <label for="option" class="form-label">Option {{j + 1}}:</label>
+                            <div class="input-group">
+                                <input formControlName="optionText" type="text" class="form-control"
+                                    placeholder="Enter option text">
+                                <div class="input-group-text">
+                                    <input type="radio" [value]="j" name="correctOption{{i}}"
+                                        (change)="setCorrectOption(i, j)">
+                                </div>
+                                <span class="input-group-text">Select as correct</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" (click)="addOption(i)" class="btn btn-secondary"
+                        [disabled]="getOptions(i).length >= 4" style="width: 100%;">
+                        Add Option
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <button type="button" class="btn btn-primary" (click)="addQuiz()" style="width: 100%;">Add
+                    Quizes</button>
+            </div>
+
+            <div formArrayName="assignments" class="mb-4">
+                <div *ngFor="let assignment of assignmentArray.controls; let i=index" [formGroupName]="i"
+                    class="card p-3 mb-3">
+                    <h3 class="card-title d-flex justify-content-between align-items-center">
+                        Assignment {{i + 1}}
+                        <button type="button" (click)="deleteAssignment(i)" class="btn btn-danger btn-sm">Delete
+                            Assignment</button>
+                    </h3>
+
+                    <div class="mb-3">
+                        <label for="assignmentQuestion" class="form-label">Question:</label>
+                        <input formControlName="assignmentQuestion" type="text" class="form-control"
+                            placeholder="Enter the assignment question">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="button" (click)="addAssignment()" class="btn btn-secondary" style="width: 100%;">Add
+                    Assignment</button>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn"
+                    style="background-color: #f86f03;color: white; width: 100%;">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</div>

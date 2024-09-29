@@ -1,0 +1,14 @@
+<i class="fa-solid fa-list" style="position: absolute; top: 90px;left: 15px; cursor: pointer; padding: 8px 8px; border-radius: 50%;z-index: 1; color: white; background-color: rgb(179, 103, 3);" (click)="toogle()"></i>
+<div class=" sidenav hide" #sidenav>
+    <!-- <h6 style="padding: 1rem 2.2rem 0;">E-store</h6> -->
+     <div class="toggle" style="width:95%;text-align:end;margin-bottom: 50px;">
+        <i class="fa-solid fa-xmark" style="cursor: pointer; padding: 6px 8px; border-radius: 50%; border:1px solid gray" (click)="toogle()"></i>
+     </div>
+    <ul>
+        <li  (click)="goTo('createrDashboard','home')" class="active" #home><i class="bi bi-house-door"></i> Courses</li>
+        <li (click)="goTo('createrDashboard/add-courses','course')" #course><i class="bi bi-box-seam" ></i>Add Courses</li>
+        <li (click)="goTo('createrDashboard/help','help')" #help><i class="bi bi-question-circle"></i> Help</li>
+        <!-- <li class="signoutbtn" (click)="signOut()"> Logout</li> -->
+    </ul>
+</div>
+

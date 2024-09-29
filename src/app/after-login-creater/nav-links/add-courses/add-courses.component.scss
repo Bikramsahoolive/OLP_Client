@@ -1,0 +1,37 @@
+.main-container {
+    // background-image: url(http://localhost:4200/assets/seller/bg.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    /* background-position: center; */
+    background-size: cover;
+
+    .container {
+        padding: 1rem;
+
+        form {
+            border-radius: 6px;
+            padding: 3rem;
+            box-shadow: 1px 3px 14px -5px;
+            background-color: white;
+        }
+    }
+}
+
+.image-array {
+    display: flex;
+}
+
+.add-icon {
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+}
+
+@media screen and (max-width:500px) {
+    .main-container .container form {
+            padding: 70px 5px;
+        }
+    
+}

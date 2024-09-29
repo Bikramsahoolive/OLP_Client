@@ -1,0 +1,61 @@
+
+li {
+    list-style: none;
+    padding: 10px 4px;
+    transition: 0.3s;
+
+    i {
+        color: #f86f03;
+        margin-right: 0.3rem;
+        transition: 0.3s;
+    }
+}
+
+li:hover {
+    cursor: pointer;
+    background-color: #fd8c35;
+    border-radius: 10px;
+    color: white;
+
+    i {
+        color: white;
+    }
+}
+.active{
+    background-color: #f86f03;
+    color: white;
+    border-radius: 10px;
+}
+.signoutbtn {
+    width: fit-content;
+    background-color: #f86f03;
+    color: white;
+    border-radius: 10px;
+    padding: 0.3rem 1rem;
+    margin-top: 1rem;
+    transition: 0.3s;
+}
+
+.signoutbtn:hover {
+    background-color: #d96102;
+}
+
+.sidenav {
+    position: fixed;
+    left: 0;
+    top: 50px;
+    background-color: white;
+    margin-top: 2rem;
+    position: absolute;
+    padding: 1rem 0.2rem;
+    width: 20.5rem;
+    height: 40rem;
+    box-shadow: 8px 4px 10px -6px rgba(0, 0, 0, 0.1);
+    transition: left ease 0.5s;
+    z-index: 1;
+}
+
+.hide{
+    
+    left: -380px;
+}

@@ -1,0 +1,79 @@
+.container{
+    min-height: 90vh;
+}
+.rcard{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border: none;
+    height: 21rem;
+    width: 270px;
+    // padding: 10px 20px;
+    border-radius: 8px;
+}
+p{
+    margin: 0.2rem;
+}
+.allcatg{
+    color: #0d6efd;
+     float: right;
+     text-decoration: none;
+     margin-top: 20px;
+     
+}
+.allcatg:hover{
+    cursor: pointer;
+}
+.card-img-top{
+    height: 9rem;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    object-fit: cover;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+  }
+  
+.productsrow{
+    display: grid;
+    grid-template-columns: auto auto auto auto ;
+    gap: 1rem;
+}
+.butn{
+    border: none;
+    padding: 4px;
+}
+.deletebtn{
+    width: 45%;
+    // background-color: rgb(215 44 44);
+    background-color: #f86f03;
+    border-radius:22px;
+    color: white;
+    
+}
+.viewbtn{
+    width: 45%;
+    border-radius: 22px;
+    // background-color: rgb(75 163 247);
+    background-color: white;
+    color: #f86f03;
+    border: 1px solid #f86f03;
+}
+.butn:hover{
+    cursor: pointer;
+}
+
+@media only screen and (max-width:550px){
+    .productsrow{
+        grid-template-columns: auto;
+    }
+}
+
+@media only screen and (max-width:940px)and (min-width:551px){
+    .productsrow{
+        grid-template-columns: auto auto ;
+    }
+}

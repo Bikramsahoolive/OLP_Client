@@ -1,0 +1,114 @@
+<div class="bannertag mt-4">
+    <div class="overlay"></div>
+    <img [src]="bannerimage" alt="Course Preview" style="width: 100%; height: 9rem; object-fit: cover;" class="img-fluid">
+</div>
+
+<div class="course-banner">
+    <div class="row">
+        <div class="col-md-9">
+            <h1>{{course?.coursename}} </h1>
+            <p>Best Course you can find and to become a irreplaceable candidate among all .</p>
+            <div class="ratings">
+                <span class="badge bg-success">Bestseller</span>
+                <span> 4.7 ★ ( {{ course?.totalenrolments }} ratings) </span>
+            </div>
+            <p>Created by <span style="color: rgb(105, 163, 248); padding-left: 0.5rem; font-size: 20px; font-weight: 600;" > {{ course?.creatorname }} </span></p>
+            <p>Developer and Lead Instructor</p>
+            <p>Last updated 8/2024 | English | English, Hindi [Auto]</p>
+            <button (click)="onEnroll()" style="padding: 10px 20px; background-color: rgb(226, 158, 9);color: white; border-radius: 10px;border: none;outline: none;">Enroll Now</button>
+        </div>
+      
+    </div>
+</div>
+
+<div class=" course-info" >
+
+
+    <!-- <div class="course-actions card" [ngClass]="{'scrolled': isScrolled}">
+        <div class="card-header">
+            <img [src]="bannerimage" alt="Course Preview" style="width: 100%;" class="img-fluid">
+        </div>
+        <div class="card-body">
+            <div class="price">₹0</div>
+            <div class="discount">₹3,099</div>
+            <p>100% off | <span class="text-danger">1 day left at this price!</span></p>
+            <button (click)="onEnroll()" >Enroll</button>
+            <p class="mt-2">30-Day Money-Back Guarantee | Full Lifetime Access</p>
+            <button>Gift this course</button>
+        </div>
+    </div> -->
+
+    <div class="content" style="margin: 20px;">
+        <div class="card">
+            <h4>What you'll learn</h4>
+            <div class="row" style="padding-left: 20px;">
+                <div class="col-md-6">
+                    <ul class="tickul">
+                        <li>Build 2 projects for your portfolio, ready to apply for 
+                            jobs.</li>
+                        <li>After the course you will be able to build ANY website you want.</li>
+                        <li>Work as a freelance web developer.</li>
+                        <li>Master your code and become unstoppable.</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="tickul">
+                        <li>Learn the latest technologies.
+                        </li>
+                        <li>Build fully-fledged websites and web apps for your startup or business.</li>
+                        <li>Master the field you want to learn.</li>
+                        <li>Learn professional developer best practices.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- This Course Includes Section -->
+        <div class="mt-4">
+            <h4>This course includes:</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <p><i class="bi bi-play-circle"></i>on-demand video</p>
+                    <p><i class="bi bi-code-slash"></i> Self practice Quizzes</p>
+                </div>
+                <div class="col-md-4">
+                    <p><i class="bi bi-download"></i> downloadable resources</p>
+                    <p><i class="bi bi-file-text"></i> articles</p>
+                </div>
+                <div class="col-md-4">
+                    <p><i class="bi bi-award"></i> Certificate of completion</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-4" style="overflow: scroll;scrollbar-width: none;">
+            <h5 class="font-weight-bold">Top companies offer this course to their employees</h5>
+            <p>This course was selected for our collection of top-rated courses trusted by businesses worldwide.
+                <a class="learn-more-link" style="cursor: pointer;">Learn more</a>
+            </p>
+            <div class="d-flex align-items-center mt-3">
+                <img src="assets/logos/Nasdaq.png" alt="Nasdaq" class="company-logo mx-3">
+                <img src="assets/logos/Vw.png" alt="Volkswagen" class="company-logo mx-3">
+                <img src="assets/logos/Snapdocs.png" alt="Snapdocs" class="company-logo mx-3">
+                <img src="assets/logos/Netapp.png" alt="NetApp" class="company-logo mx-3">
+            </div>
+        </div>
+
+
+        <div class="mt-4">
+            <h4>This course Desription:</h4>
+            <p> {{course?.description}} </p>
+        </div>
+
+        <div class="mt-4">
+            <h4>Requirements:</h4>
+            <ul>
+                <li>No programming experience needed - I'll teach you everything you need to know</li>
+                <li>A computer with access to the internet</li>
+                <li>No paid software required</li>
+                <li>I'll walk you through, step-by-step how to get all the software installed and set up</li>
+            </ul>
+        </div>
+    </div>
+    
+<!-- </div> -->

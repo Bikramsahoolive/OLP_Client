@@ -1,0 +1,33 @@
+<div class="container">
+
+    <div style="text-align: center" *ngIf="nocourses">
+        <img src="../../../../assets/animation.gif" style="border-radius: 100%; margin-top: 7rem;" alt="">
+        <h5>No Courses Found!</h5>
+    </div>
+    <h2 style="width: 100%;text-align: center; color: gray;margin-top: 60px;">Created Courses</h2>
+    <div class="row productsrow mt-5 pt-4">
+        <div class="col" *ngFor="let course of  sanitizedCourses">
+            <div class="card m-auto">
+                <div style="background: linear-gradient(245deg, #dee3e9, transparent);">
+                    <img [src]="course.sanitizedBannerimage" class="card-img-top" alt="...">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title ellipsis"> {{course.coursename}} </h5>
+                    <p class="ellipsis"><strong>Catagory:</strong> {{course.category}}</p>
+                    <div class="d-flex justify-content-between">
+                        <p style="color: gray;">Ratings:</p>
+                        <p style="font-weight: 600;font-size: 22px; color: goldenrod;">★★★★★ </p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p style=" color: #0a65b1;font-weight: 600;font-size: 16px;">Total Enrolled:</p>
+                        <p style="color: gray;"> {{course?.totalenrolments || 0}} </p>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-evenly "
+                    style="background-color: white; border: none; padding:0 0 0.5rem 0;">
+                    <button class=" butn deletebtn" (click)="deleteCourse(course.id)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

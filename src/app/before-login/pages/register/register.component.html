@@ -1,0 +1,94 @@
+<div class="container-fluid" style="position: absolute; top: 1rem">
+    <div class="card" >
+      <div class="card-header text-center">Register</div>
+      <div class="card-body">
+        <form [formGroup]="RegisterForm" (ngSubmit)="onRegister(RegisterForm.value)">
+          <div class="row">
+            <div class="col-5">
+            <div class="col">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="John Doe"
+                formControlName="username"
+              />
+              <div *ngIf="! Username?.valid &&(Username?.touched || Username?.dirty) " style="color: red;">
+                Username is required
+              </div>
+            </div>
+            <div class="col">
+              <label for="usertype">Usertype</label>
+                <select class="form-select" aria-label="Default select example" formControlName="usertype">
+                    <option value=""> Select </option>
+                    <option value="creator">Creator</option>
+                    <option value="student">Student</option>
+                  </select>
+                  <div *ngIf="! usertype?.valid &&(usertype?.touched || usertype?.dirty) " style="color: red;">
+                    Usertype is required
+                  </div>
+            </div>
+            <div class="col">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="john@gmail.com"
+                formControlName="useremail"
+              />
+              <div *ngIf="! useremail?.valid &&(useremail?.touched || useremail?.dirty) " style="color: red;">
+                Email is required
+              </div>
+            </div>
+              <div class="col">
+                  <label for="password">Password</label>
+            <input
+            [type]=" iseyeclicked ? 'text':'password' "
+              class="form-control"
+              formControlName="password"
+            />
+            <div (click)="eyebtnclicked()" >
+                <i class="bi bi-eye-fill eyebutton"></i>
+                <i *ngIf="iseyeclicked" class="bi bi-eye-slash-fill eyebutton "></i> 
+            </div>
+       
+            <div *ngIf="! paassword?.valid &&(paassword?.touched || paassword?.dirty) " style="color: red;">
+              Password is required
+            </div>
+                    <!-- <div *ngIf="paassword?.error" style="color: red;" >
+                      Password must contain 8 characters ,one uppercase and one lowercase letter and a special character
+                </div> -->
+              </div>
+              <div class="col">
+                  <label for="cpassword">Confirm password</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="cpassw"
+                  />
+                  <div *ngIf="! confpass?.valid &&(confpass?.touched || confpass?.dirty) " style="color: red;">
+                    Confirm password is required
+                  </div>
+              </div>
+       
+         
+        
+              <div class="col mt-4">
+                  <button class="btn btn-primary" [disabled]="!RegisterForm.valid"  style="width: 100%;">Register</button>
+                  
+              </div>
+              <div class="col" style="    margin-top: 2rem;">
+              Already a User?
+                  <a style="color: rgb(45, 141, 252); cursor: pointer;" (click)="loginPage()">Login Here</a>
+              </div>
+      </div>
+      <div class="col-7">
+        <img class="registerimg"  src="../../../assets/register.png">
+      </div>
+    </div>
+    
+        </form>
+      </div>
+    </div>
+  </div>
+  

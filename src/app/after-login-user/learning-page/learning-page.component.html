@@ -1,0 +1,256 @@
+<div class="card mt-4 course-card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs justify-content-center" style="transition: 0.3s;">
+
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': activeTab === 'course-content'}"
+          (click)="setActiveTab('course-content')">
+          Learning
+          <i *ngIf="progress.learningstatus === true" class="fa fa-check-circle text-success" style="background-color: white !important; border-radius: 50%; margin-left: 10px;"></i>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': activeTab === 'quizzes'}" (click)="setActiveTab('quizzes')">
+          Quizzes
+          <i *ngIf="progress.quizstatus === true " class="fa fa-check-circle text-success" style="background-color: white !important; border-radius: 50%; margin-left: 10px;"></i>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': activeTab === 'assignments'}" (click)="setActiveTab('assignments')">
+          Assignments
+          <i *ngIf="progress?.assignmentstatus === true " class="fa fa-check-circle text-success" style="background-color: white !important; border-radius: 50%; margin-left: 10px;"></i>
+        </a>
+      </li>
+
+      <!-- <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': activeTab === 'student-progress'}"
+          (click)="setActiveTab('student-progress')">
+          Student Progress
+          <i *ngIf="progress?.coursecompilation ==='true' " class="fa fa-check-circle text-success"></i>
+        </a>
+      </li> -->
+
+    </ul>
+  </div>
+
+  <div class="card-body" style="padding: 0 !important;">
+    <div class="tab-content">
+      <div *ngIf="activeTab === 'course-content'">
+        <h5 style="width:100%;text-align: center;">Course Content</h5>
+        <div class="course-content">
+          <!-- Course Banner -->
+          <!-- <div class="banner-container" [ngStyle]="{'background-image': 'url(' + data.bannerimage + ')'}"> -->
+              <!-- <div class="overlay"></div> -->
+              <!-- <h1 class="course-title">{{ data.coursename }}</h1>
+              <p class="category">{{ data.category }}</p> -->
+            
+          <!-- </div> -->
+          <div class="content-wrapper container mt-4">
+            <div class="row">
+              <!-- Left Column: Course Details -->
+              <div class="col-md-8">
+                <div class="video-container">
+                  <iframe  width="650" height="350" [src]="sanitizer.bypassSecurityTrustResourceUrl(videoP)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+
+                <!-- <div class="course-description mt-4">
+                  
+                </div> -->
+
+                <div class="course-pdf mt-4" *ngIf="data?.pdf">
+                  
+                </div>
+              </div>
+
+              <!-- Right Column: Creator Info -->
+              <div class="col-md-4">
+                <div class="creator-card card p-3">
+                  <h5>Created by: {{ data?.creatorname }}</h5>
+                  <p>Total Enrolments: {{ data?.totalenrolments }}</p>
+                  <p>Category: {{ data?.category }}</p>
+                  <h2>Description</h2>
+                  <p>{{ data?.description }}</p>
+                  <a [href]="data?.pdf?.url" target="_blank" class="btn btn-primary">
+                    Download PDF Notes
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-4" *ngIf="!progress.learningstatus; else learningTemplate">
+              <a (click)="onLearningComplt()" class="btn btn-primary">
+                Learning Completed
+              </a>
+            </div>
+            <ng-template #learningTemplate>
+              <div class="result-card text-center">
+                <h3>Learning Completed successfully!</h3>
+                <p>Your Learning Completed please proceed to quiz test.</p>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+
+
+
+
+      </div>
+      <div *ngIf="activeTab === 'quizzes'">
+        <h5 style="width: 100%;text-align: center;">Quizzes</h5>
+        <div class="quiz-container container mt-4">
+          <div *ngIf="!quizSubmitted ; else resultTemplate">
+            <h1 class="text-center mb-4">Quiz Test</h1>
+            <div class="card mb-4" *ngFor="let question of quiz; let i = index">
+              <div class="card-body">
+                <h5 class="card-title">{{ i + 1 }}. {{ question?.question }}</h5>
+                <div class="form-group">
+                  <div *ngFor="let option of question.options; let j = index" class="form-check">
+                    <input class="form-check-input" type="radio" [name]="'question' + i" [value]="j"
+                      (change)="selectOption(i, j)" [checked]="selectedOptions[i] === j" />
+                    <label class="form-check-label">
+                      {{ option.optionText }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary w-100" (click)="submitQuiz()">Submit Quiz</button>
+          </div>
+
+          <ng-template #resultTemplate>
+            <div class="result-card text-center">
+              <h3>Your Score: {{ score }} / {{ quiz.length }}</h3>
+              <p>Your Quiz Test Completed! please proceed to Assignments.</p>
+              <!-- <button class="btn btn-secondary mt-3" (click)="resetQuiz()">Try Again</button> -->
+            </div>
+          </ng-template>
+        </div>
+
+      </div>
+      <div *ngIf="activeTab === 'assignments'">
+        <h5 style="width: 100%;text-align: center;">Assignments</h5>
+        <div class="assignment-container container mt-4">
+          <div *ngIf="!progress.assignmentstatus; else certificate">
+          <h1 class="text-center mb-4">Assignment Test</h1>
+
+          <div *ngFor="let question of assignment; let i = index" class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ i + 1 }}. {{ question.assignmentQuestion }}</h5>
+              <div class="form-group">
+                <textarea class="form-control" [(ngModel)]="answers[i]" rows="4"
+                  placeholder="Type your answer here..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-primary me-2" (click)="submitAssignment()">Submit Assignment</button>
+            <!-- <button class="btn btn-secondary" (click)="resetAssignment()">Reset Assignment</button> -->
+          </div>
+
+          <div *ngIf="submissionStatus" class="alert alert-success mt-3 text-center">
+            {{ submissionStatus }}
+          </div>
+          
+        </div>
+        <div>
+          <ng-template #certificate>
+            <div class="result-card text-center">
+              <h3>Assignment Submitted!</h3>
+              <p>Congratulation !!! Your Course comleted succssfully.</p>
+              <button class="btn btn-secondary mt-3" (click)="certificateDownload()">Download Certificate</button>
+            </div>
+          </ng-template>
+      </div>
+      <!-- <div *ngIf="activeTab === 'student-progress'">
+        <h5>Student Progress</h5>
+        <div class="container mt-4">
+          <h1 class="text-center mb-4">Student Progress Page</h1>
+
+          <div class="row"> -->
+            <!-- Assignments Section -->
+            <!-- <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Assignments</h5>
+                </div>
+                <ul class="list-group list-group-flush"> -->
+                  <!-- <li *ngFor="let assignment of assignments" class="list-group-item d-flex justify-content-between align-items-center"> -->
+                  <!-- assignment.question
+                  <span class="badge bg-success"> assignment.status </span> -->
+                  <!-- </li> -->
+                <!-- </ul> -->
+              <!-- </div>
+            </div> -->
+
+            <!-- Quizzes Section -->
+            <!-- <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Quizzes</h5>
+                </div>
+                <ul class="list-group list-group-flush"> -->
+                  <!-- <li *ngFor="let quiz of quizzes" class="list-group-item d-flex justify-content-between align-items-center"> -->
+                  <!-- {{ quiz.title }} -->
+                  <!-- <span class="badge bg-info"> quiz.score /quiz.maxScore</span> -->
+                  <!-- </li> -->
+                <!-- </ul> -->
+              <!-- </div>
+            </div> -->
+
+            <!-- Video Resources Section -->
+            <!-- <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Video Resources</h5>
+                </div>
+                <ul class="list-group list-group-flush"> -->
+                  <!-- <li *ngFor="let video of videos" class="list-group-item"> -->
+                  <!-- <a target="_blank">video.title </a> -->
+                  <!-- href="{{ video.url }}" -->
+                  <!-- </li> -->
+                <!-- </ul> -->
+              <!-- </div> -->
+            <!-- </div> -->
+          <!-- </div> -->
+
+          <!-- <div class="row"> -->
+            <!-- PDF Resources Section -->
+            <!-- <div class="col-md-6 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5>PDF Resources</h5>
+                </div>
+                <ul class="list-group list-group-flush"> -->
+                  <!-- <li *ngFor="let pdf of pdfs" class="list-group-item"> -->
+                  <!-- <a target="_blank"> pdf.title </a> -->
+                  <!-- href="{{ pdf.url }}"  -->
+                  <!-- </li> -->
+                <!-- </ul> -->
+              <!-- </div> -->
+            <!-- </div> -->
+
+            <!-- Progress Summary Section -->
+            <!-- <div class="col-md-6 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Progress Summary</h5>
+                </div>
+                <div class="card-body">
+                  <p>Total Assignments: assignments.length </p>
+                  <p>Completed Assignments: assignments.filter(a => a.status === 'Completed').length </p>
+                  <p>Total Quizzes: quizzes.length </p>
+                  <p>Average Score: quizzes.length ? (quizzes.reduce((sum, quiz) => sum + quiz.score, 0) /
+                    quizzes.length) : 0 | number: '1.0-0' </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+      <!-- </div> -->
+    </div>
+  </div>
+</div>
