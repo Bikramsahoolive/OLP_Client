@@ -14,16 +14,21 @@ import Swal from 'sweetalert2';
 
 
 export class ForgotpasswordComponent {
-  emailval: any;
+  // emailval: any;
   forgotForm:FormGroup
   constructor(private spinner:NgxSpinnerService ,private router: Router,private _registerdetails:RegisterService,private _formValue:FormBuilder){
   this.forgotForm= this._formValue.group({
-    forgotemail:['',[Validators.required,Validators.email]]
+    forgotemail:['',[Validators.required,Validators.email]],
+    usertype:['',Validators.required]
   })
   }
 
   get emailvalue(){
     return this.forgotForm.get('forgotemail')
+  }
+
+  get usertypevalue(){
+    return this.forgotForm.get('usertype')
   }
 
   loginPage(){
@@ -34,7 +39,7 @@ export class ForgotpasswordComponent {
   verifyemailid(val:any){
     // console.log(val)
     this.spinner.show();
-    this._registerdetails.findEmail({useremail:val.forgotemail}).subscribe({
+    this._registerdetails.findEmail({useremail:val.forgotemail,usertype:val.usertype}).subscribe({
       next:(res:any)=>{
         this.spinner.hide();
         // console.log(res);
@@ -61,7 +66,7 @@ export class ForgotpasswordComponent {
                 const response = await fetch('https://c8bltjmv-3000.inc1.devtunnels.ms/auth/password',{
                   method:'PATCH',
                   headers:{"Content-Type":"application/json"},
-                  body:JSON.stringify({otp,password,email:val.forgotemail})
+                  body:JSON.stringify({otp,password,email:val.forgotemail,usertype:val.usertype})
                 })
   
                 if(response.ok){
@@ -96,17 +101,17 @@ export class ForgotpasswordComponent {
   }
 
 
-  inputchange(e:any){
-    this.emailval = e.target.value
-    let val :null |any =  document.querySelector('.requiredfield')
-    if(this.emailval == ''){
+  // inputchange(e:any){
+  //   this.emailval = e.target.value
+  //   let val :null |any =  document.querySelector('.requiredfield')
+  //   if(this.emailval == ''){
     
-      val.style.display = 'block'
-    }
-    else{
+  //     val.style.display = 'block'
+  //   }
+  //   else{
      
-      val.style.display = 'none'
-    }
-  }
+  //     val.style.display = 'none'
+  //   }
+  // }
  
 }
