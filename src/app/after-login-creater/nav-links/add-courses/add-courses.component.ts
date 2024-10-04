@@ -60,6 +60,10 @@ export class AddCoursesComponent {
     this.quizArray.push(quizGroup);
   }
 
+  getOptions(quizIndex: number): FormArray {
+    return (this.quizArray.at(quizIndex) as FormGroup).get('options') as FormArray;
+  }
+
   addOption(quizIndex: number) {
     const optionsArray = this.getOptions(quizIndex);
     if (optionsArray.length < 4) {
@@ -70,9 +74,6 @@ export class AddCoursesComponent {
     }
   }
 
-  getOptions(quizIndex: number): FormArray {
-    return (this.quizArray.at(quizIndex) as FormGroup).get('options') as FormArray;
-  }
 
   setCorrectOption(quizIndex: number, optionIndex: number) {
     const quizGroup = this.quizArray.at(quizIndex) as FormGroup;

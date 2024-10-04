@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
         this.spinner.hide();
         // this.courses = res;
         // console.log(JSON.parse(res[0].bannerimage))
-        let result = res.forEach((course: any) => {
+         res.forEach((course: any) => {
           if(type==''){
             this.sanitizedCourses.push( {
               ...course,

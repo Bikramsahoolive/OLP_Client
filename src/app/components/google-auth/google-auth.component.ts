@@ -20,7 +20,11 @@ export class GoogleAuthComponent {
     let data =await JSON.parse(atob(token));
     this.userData = data;
     this.name = data.username;
-    if (data.usertype)this.userType= data.usertype;
+    if (data.usertype){
+      this.userType= data.usertype;
+      if(data.usertype == 'creator')this.creatorGlogin();
+      if(data.usertype == 'student')this.studentGlogin();
+    }
     
     
   }
