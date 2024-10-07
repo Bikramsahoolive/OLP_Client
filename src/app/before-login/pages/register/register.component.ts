@@ -23,13 +23,10 @@ export class RegisterComponent {
   iseyeclicked = false;
   constructor(public _registerdata: FormBuilder, private router: Router, private _registerdetails: RegisterService,private toastr:ToastrService, private spinner:NgxSpinnerService) {
     this.RegisterForm = this._registerdata.group({
-      username: ['', [Validators.required, Validators.maxLength(40),
-        //  Validators.pattern('^[A-Za-z\s]+$')
-        ]],
+      username: ['', [Validators.required, Validators.maxLength(40)]],
       usertype: ['', [Validators.required]],
       useremail: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      // ,Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')
+      password: ['', [Validators.required,Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).+(?=.*[@$!%*?&]).{8,}$')]],
       cpassw: ['', Validators.required],
     })
   }
